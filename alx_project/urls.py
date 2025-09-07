@@ -1,10 +1,12 @@
+# alx_project/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect  # 👈 Add this
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from listings.views import api_overview  # import your function-based view
 
+# Swagger/OpenAPI schema view
 schema_view = get_schema_view(
     openapi.Info(
         title="ALX Project API",
@@ -17,8 +19,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('listings.urls')),   # your app’s endpoints
+    path('api/', include('listings.urls')),  # make sure this exists
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('', lambda request: redirect('schema-swagger-ui')),  # Redirect root to Swagger
+    path('', api_overview, name='api-overview'),  # root URL now shows API overview
 ]
-
