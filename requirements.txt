@@ -1,0 +1,23 @@
+Django>=4.2,<5.0
+djangorestframework>=3.14.0
+drf-yasg>=1.21.7
+
+# Celery + Broker
+celery>=5.3.6
+kombu>=5.3.4
+
+# Gunicorn for production WSGI server
+gunicorn>=21.2.0
+
+# Whitenoise for static file handling
+whitenoise>=6.6.0
+
+# Database
+psycopg2-binary>=2.9.9
+
+# Redis support (if you ever want to switch from RabbitMQ or use caching)
+django-redis>=5.4.0
+
+# For environment variables
+python-decouple>=3.8
+
