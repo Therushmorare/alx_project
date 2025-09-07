@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: alx-project
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate
+    startCommand: gunicorn alx_project.wsgi:application --log-file -
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_SETTINGS_MODULE
+        value: alx_project.settings
+      - key: DEBUG
+        value: False
+      - key: DATABASE_URL
+        fromDatabase:
+          name: alx-project-db
+          property: connectionString
+      - key: CLOUDAMQP_URL
+        sync: false   # Add your CloudAMQP broker URL here manually
+
+  - type: worker
+    name: alx-project-worker
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: celery -A alx_project worker --loglevel=info
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: alx_project.settings
+      - key: CLOUDAMQP_URL
+        sync: false
+
+  - type: worker
+    name: alx-project-beat
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: celery -A alx_project beat --loglevel=info
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: alx_project.settings
+
