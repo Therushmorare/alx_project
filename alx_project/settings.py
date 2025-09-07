@@ -23,10 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wsc6=hatggd#c7(#oqz2t78yvgy@au*yi5z%jx-pp65ml$(n_z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# alx_project/settings.py
 
+ALLOWED_HOSTS = [
+    '127.0.0.1',             # local dev
+    'localhost',             # local dev
+    'alx-project-sqyn.onrender.com',  # your Render URL
+]
 
 # Application definition
 
